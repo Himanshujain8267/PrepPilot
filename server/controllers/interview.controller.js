@@ -6,7 +6,7 @@ import fs from "fs"
 import * as pdfjsLib from "pdfjs-dist/legacy/build/pdf.mjs";
 import { askAi } from "../services/openRouter.service.js";
 import User from "../models/user.model.js";
-// import Interview from "../models/interview.model.js";
+ import Interview from "../models/interview.model.js";
 
 export const analyzeResume = async (req, res) => {
   try {
@@ -68,7 +68,10 @@ Return strictly JSON:
 
     const aiResponse = await askAi(messages)
 
-    const parsed = JSON.parse(aiResponse);
+    // Remove markdown code blocks if present
+    let cleanedResponse = aiResponse.replace(/```json\n?/g, '').replace(/```\n?/g, '').trim()
+    
+    const parsed = JSON.parse(cleanedResponse);
 
     fs.unlinkSync(filepath)
 
@@ -105,6 +108,8 @@ export const generateQuestion = async (req, res) => {
       return res.status(400).json({ message: "Role, Experience and Mode are required." })
     }
 
+
+    // jo isAuth middleware banaya hai ussa huma yeh" req.userid" milegi uss middleware seih 
     const user = await User.findById(req.userId)
 
     if (!user) {
@@ -119,6 +124,10 @@ export const generateQuestion = async (req, res) => {
       });
     }
 
+    // hum check kar rahe hai ki huma array mili hai ki nhi orr joo uski length hai 
+    // joh length hai voh 0 nhi hai 
+    //toh hum 
+    // agar ek bhi chiz nhi hai toh none store kara linga
     const projectText = Array.isArray(projects) && projects.length
       ? projects.join(", ")
       : "None";
@@ -129,6 +138,7 @@ export const generateQuestion = async (req, res) => {
 
     const safeResume = resumeText?.trim() || "None";
 
+    // joh user kya kya dega
     const userPrompt = `
     Role:${role}
     Experience:${experience}
@@ -143,6 +153,7 @@ export const generateQuestion = async (req, res) => {
         message: "Prompt content is empty."
       });
     }
+    // abh jo message hum ai ko bhejna vale hai
 
     const messages = [
 
@@ -182,6 +193,7 @@ Make questions based on the candidate’s role, experience,interviewMode, projec
       }
     ];
 
+    // ai ka response aaega 
 
     const aiResponse = await askAi(messages)
 
@@ -193,6 +205,7 @@ Make questions based on the candidate’s role, experience,interviewMode, projec
 
     }
 
+    // question ko question array meih save kar lia
     const questionsArray = aiResponse
       .split("\n")
       .map(q => q.trim())
@@ -209,19 +222,24 @@ Make questions based on the candidate’s role, experience,interviewMode, projec
     user.credits -= 50;
     await user.save();
 
+
+    // abh mosel meih interview create ara lia hai 
     const interview = await Interview.create({
       userId: user._id,
       role,
       experience,
       mode,
       resumeText: safeResume,
+      // question ko map kara rahe hai
       questions: questionsArray.map((q, index) => ({
         question: q,
         difficulty: ["easy", "easy", "medium", "medium", "hard"][index],
-        timeLimit: [60, 60, 90, 90, 120][index],
+        timeLimit: [75, 75, 90, 90, 120][index],
       }))
     })
 
+    // abh frontend ko kya kya bhejna hai
+    // yeh json data hai jo frontend peih jaega 
     res.json({
       interviewId: interview._id,
       creditsLeft: user.credits,
@@ -234,12 +252,15 @@ Make questions based on the candidate’s role, experience,interviewMode, projec
 }
 
 
+
+
+// now the answer is submited for the questions 
 export const submitAnswer = async (req, res) => {
   try {
     const { interviewId, questionIndex, answer, timeTaken } = req.body
 
-    const interview = await Interview.findById(interviewId)
-    const question = interview.questions[questionIndex]
+    const interview = await Interview.findById(interviewId) ;
+    const question = interview.questions[questionIndex]      
 
     // If no answer
     if (!answer) {
@@ -347,6 +368,7 @@ Answer: ${answer}
 
 export const finishInterview = async (req,res) => {
   try {
+    // abh isma huma interview id milegi 
     const {interviewId} = req.body
     const interview = await Interview.findById(interviewId)
     if(!interview){
@@ -407,6 +429,8 @@ export const finishInterview = async (req,res) => {
   }
 }
 
+
+// used in step 3 for the report
 
 export const getMyInterviews = async (req,res) => {
   try {

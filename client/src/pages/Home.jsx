@@ -29,15 +29,15 @@ function Home() {
   const [showAuth, setShowAuth] = useState(false);
   const navigate = useNavigate()
   return (
-    <div className='min-h-screen bg-[#f3f3f3] flex flex-col'>
+    <div className='min-h-screen bg-[radial-gradient(circle_at_top_left,_#f9f2f8_0%,_#f4ebf6_45%,_#efe7f2_100%)] text-[#322B3B] flex flex-col'>
       <Navbar />
 
       <div className='flex-1 px-6 py-20'>
         <div className='max-w-6xl mx-auto'>
 
           <div className='flex justify-center mb-6'>
-            <div className='bg-gray-100 text-gray-600 text-sm px-4 py-2 rounded-full flex items-center gap-2'>
-              <HiSparkles size={16} className="bg-green-50 text-green-600" />
+            <div className='bg-white/80 backdrop-blur-sm text-[#520EA7] text-sm px-4 py-2 rounded-full flex items-center gap-2 border border-[#D5BED9] shadow-sm'>
+              <HiSparkles size={16} className="bg-[#F4E8FB] text-[#805093] rounded-full p-1" />
               AI Powered Smart Interview Platform
             </div>
 
@@ -50,8 +50,8 @@ function Home() {
               transition={{ duration: 0.6 }}
               className='text-4xl md:text-6xl font-semibold leading-tight max-w-4xl mx-auto'>
               Practice Interviews with
-              <span className='relative inline-block'>
-                <span className='bg-green-100 text-green-600 px-5 py-1 rounded-full'>
+              <span className='relative inline-block ml-2'>
+                <span className='bg-gradient-to-r from-[#D5BED9] to-[#F4E8FB] text-[#520EA7] px-5 py-1 rounded-full border border-[#A174AF]/30 shadow-[0_8px_24px_rgba(82,14,167,0.08)]'>
                   AI Intelligence
 
                 </span>
@@ -65,7 +65,7 @@ function Home() {
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
               transition={{ duration: 0.8 }}
-              className='text-gray-500 mt-6 max-w-2xl mx-auto text-lg'>
+              className='text-[#6f567f] mt-6 max-w-2xl mx-auto text-lg'>
               Role-based mock interviews with smart follow-ups,
               adaptive difficulty and real-time performance evaluation.
 
@@ -82,7 +82,7 @@ function Home() {
                 }}
                 whileHover={{ opacity: 0.9, scale: 1.03 }}
                 whileTap={{ opacity: 1, scale: 0.98 }}
-                className='bg-black text-white px-10 py-3 rounded-full hover:opacity-90 transition shadow-md'>
+                className='bg-gradient-to-r from-[#805093] to-[#520EA7] text-white px-10 py-3 rounded-full hover:opacity-90 transition shadow-[0_10px_30px_rgba(82,14,167,0.18)]'>
                 Start Interview
 
               </motion.button>
@@ -97,7 +97,7 @@ function Home() {
                 }}
                 whileHover={{ opacity: 0.9, scale: 1.03 }}
                 whileTap={{ opacity: 1, scale: 0.98 }}
-                className='border border-gray-300 px-10 py-3 rounded-full hover:bg-gray-100 transition'>
+                className='border border-[#D5BED9] bg-white/90 text-[#520EA7] px-10 py-3 rounded-full hover:bg-[#F7ECFB] transition'>
                 View History
 
               </motion.button>
@@ -133,20 +133,20 @@ function Home() {
                   whileHover={{ rotate: 0, scale: 1.06 }}
 
                   className={`
-        relative bg-white rounded-3xl border-2 border-green-100 
-        hover:border-green-500 p-10 w-80 max-w-[90%] shadow-md hover:shadow-2xl 
+        relative bg-white/90 rounded-3xl border border-[#E7D8EA] 
+        hover:border-[#A174AF] p-10 w-80 max-w-[90%] shadow-[0_12px_40px_rgba(82,14,167,0.06)] hover:shadow-[0_16px_50px_rgba(82,14,167,0.12)] 
         transition-all duration-300
         ${index === 0 ? "rotate-[-4deg]" : ""}
         ${index === 1 ? "rotate-[3deg] md:-mt-6 shadow-xl" : ""}
         ${index === 2 ? "rotate-[-3deg]" : ""}
       `}>
 
-                  <div className='absolute -top-8 left-1/2 -translate-x-1/2 bg-white border-2 border-green-500 text-green-600 w-16 h-16 rounded-2xl flex items-center justify-center shadow-lg'>
+                  <div className='absolute -top-8 left-1/2 -translate-x-1/2 bg-[#F4E8FB] border border-[#D5BED9] text-[#520EA7] w-16 h-16 rounded-2xl flex items-center justify-center shadow-sm'>
                     {item.icon}</div>
                   <div className='pt-10 text-center'>
-                    <div className='text-xs text-green-600 font-semibold mb-2 tracking-wider'>{item.step}</div>
+                    <div className='text-xs text-[#805093] font-semibold mb-2 tracking-wider'>{item.step}</div>
                     <h3 className='font-semibold mb-3 text-lg'>{item.title}</h3>
-                    <p className='text-sm text-gray-500 leading-relaxed'>{item.desc}</p>
+                    <p className='text-sm text-[#6f567f] leading-relaxed'>{item.desc}</p>
                   </div>
 
 
@@ -161,9 +161,9 @@ function Home() {
               initial={{ opacity: 0, y: 20 }}
               whileInView={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.6 }}
-              className='text-4xl font-semibold text-center mb-16'>
+              className='text-4xl font-semibold text-center mb-16 text-[#322B3B]'>
               Advanced AI{" "}
-              <span className="text-green-600">Capabilities</span>
+              <span className="text-[#805093]">Capabilities</span>
 
             </motion.h2>
 
@@ -200,18 +200,18 @@ function Home() {
                     whileInView={{ opacity: 1, y: 0 }}
                     transition={{ duration: 0.5, delay: index * 0.1 }}
                     whileHover={{ scale: 1.02 }}
-                    className='bg-white border border-gray-200 rounded-3xl p-8 shadow-sm hover:shadow-xl transition-all'>
+                    className='bg-white/90 border border-[#E7D8EA] rounded-3xl p-8 shadow-[0_12px_36px_rgba(82,14,167,0.05)] hover:shadow-[0_16px_45px_rgba(82,14,167,0.1)] transition-all'>
                     <div className='flex flex-col md:flex-row items-center gap-8'>
                       <div className='w-full md:w-1/2 flex justify-center'>
                         <img src={item.image} alt={item.title} className='w-full h-auto object-contain max-h-64' />
                       </div>
 
                       <div className='w-full md:w-1/2'>
-                        <div className='bg-green-50 text-green-600 w-12 h-12 rounded-xl flex items-center justify-center mb-6'>
+                        <div className='bg-[#F4E8FB] text-[#520EA7] w-12 h-12 rounded-xl flex items-center justify-center mb-6'>
                           {item.icon}
                         </div>
                         <h3 className='font-semibold mb-3 text-xl'>{item.title}</h3>
-                        <p className='text-gray-500 text-sm leading-relaxed'>{item.desc}</p>
+                        <p className='text-[#6f567f] text-sm leading-relaxed'>{item.desc}</p>
                       </div>
 
                     </div>
@@ -230,9 +230,9 @@ function Home() {
               initial={{ opacity: 0, y: 20 }}
               whileInView={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.6 }}
-              className='text-4xl font-semibold text-center mb-16'>
+              className='text-4xl font-semibold text-center mb-16 text-[#322B3B]'>
               Multiple Interview{" "}
-              <span className="text-green-600">Modes</span>
+              <span className="text-[#805093]">Modes</span>
 
             </motion.h2>
 
@@ -266,15 +266,15 @@ function Home() {
                     whileInView={{ opacity: 1, y: 0 }}
                     transition={{ duration: 0.5, delay: index * 0.1 }}
                     whileHover={{ y: -6 }}
-                    className="bg-white border border-gray-200 rounded-3xl p-8 shadow-sm hover:shadow-xl transition-all">
+                    className="bg-white/90 border border-[#E7D8EA] rounded-3xl p-8 shadow-[0_12px_36px_rgba(82,14,167,0.05)] hover:shadow-[0_16px_45px_rgba(82,14,167,0.1)] transition-all">
 
                     <div className='flex items-center justify-between gap-6'>
                       <div className="w-1/2">
-                        <h3 className="font-semibold text-xl mb-3">
+                        <h3 className="font-semibold text-xl mb-3 text-[#322B3B]">
                           {mode.title}
                         </h3>
 
-                        <p className="text-gray-500 text-sm leading-relaxed">
+                        <p className="text-[#6f567f] text-sm leading-relaxed">
                           {mode.desc}
                         </p>
                       </div>

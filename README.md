@@ -1,27 +1,39 @@
 # PrepPilot
 
-PrepPilot is an AI-powered interview practice platform with a React + Vite frontend and an Express + MongoDB backend. It enables users to sign in with Google, upload a resume for AI analysis, generate role-based interview questions, practice answers with a voice-enabled interviewer, and receive scored feedback plus downloadable PDF reports.
+PrepPilot is an AI-powered interview preparation platform built as a full-stack project. It includes a React + Vite frontend and an Express + MongoDB backend. Users sign in with Google, optionally upload a resume for AI analysis, generate interview questions tailored to their role and experience, answer those questions with voice-enabled interaction, and receive AI-scored feedback plus downloadable PDF reports.
+
+## What this project does
+
+- Authenticates users through Google sign-in on the frontend
+- Stores session tokens in HTTP-only cookies for authenticated API access
+- Extracts structured resume data from uploaded PDF files
+- Generates 5 AI-driven interview questions with progressive difficulty
+- Runs a timed, voice-enabled interview experience in the browser
+- Evaluates candidate answers with AI scoring and human-like feedback
+- Tracks past interviews and displays history
+- Generates downloadable PDF interview reports
 
 ## Key Features
 
-- Google authentication with secure HTTP-only cookies
-- Resume upload and AI-powered resume extraction
-- Role, experience, and interview mode selection (Technical / HR)
-- AI-generated interview questions with difficulty progression
-- Voice-enabled interview flow using browser speech synthesis and recognition
-- Answer submission with AI evaluation and feedback
-- Interview history tracking and report generation
-- Downloadable PDF performance reports
-- Redux state management for current user data
+- Google sign-in using Firebase Authentication
+- JWT-based session management via HTTP-only cookies
+- Resume upload and AI resume parsing with `pdfjs-dist`
+- Interview modes: `Technical` and `HR`
+- AI question generation using OpenRouter (`openai/gpt-4o-mini`)
+- Voice support via browser speech synthesis and WebKit speech recognition
+- Answer submission with AI evaluation of confidence, communication, and correctness
+- Interview history and report retrieval
+- PDF report download using `jspdf` and `jspdf-autotable`
 
 ## Tech Stack
 
 - Frontend: React, Vite, Tailwind CSS, React Router, Redux Toolkit
 - Backend: Node.js, Express, MongoDB, Mongoose
-- Authentication: Google OAuth + JWT stored in cookies
-- AI Services: OpenRouter API (`openai/gpt-4o-mini`)
-- Resume analysis: `pdfjs-dist`
-- PDF report generation: `jspdf`, `jspdf-autotable`
+- Authentication: Firebase Google login + JWT cookies
+- AI Service: OpenRouter API
+- File Uploads: Multer
+- Resume parsing: `pdfjs-dist`
+- PDF export: `jspdf`, `jspdf-autotable`
 
 ## Repository Structure
 
@@ -33,18 +45,47 @@ client/
     App.jsx
     main.jsx
     pages/
+      Auth.jsx
+      Home.jsx
+      InterviewHistory.jsx
+      InterviewPage.jsx
+      InterviewReport.jsx
+      Pricing.jsx
     components/
+      AuthModel.jsx
+      Footer.jsx
+      Navbar.jsx
+      Step1SetUp.jsx
+      Step2Interview.jsx
+      Step3Report.jsx
+      Timer.jsx
     redux/
-    utils/firebase.js
+      store.js
+      userSlice.js
+    utils/
+      firebase.js
 server/
   package.json
   index.js
   config/
+    connectDb.js
+    token.js
   controllers/
+    auth.controller.js
+    interview.controller.js
+    user.controller.js
   middlewares/
+    isAuth.js
+    multer.js
   models/
+    interview.model.js
+    user.model.js
   routes/
+    auth.routes.js
+    interview.route.js
+    user.route.js
   services/
+    openRouter.service.js
 ```
 
 ## Setup Instructions
@@ -56,9 +97,7 @@ git clone <repo-url>
 cd PrepPilot
 ```
 
-### 2. Environment Variables
-
-Create separate `.env` files for the client and server as needed.
+### 2. Create environment variables
 
 #### Server `.env`
 
@@ -75,11 +114,9 @@ OPENROUTER_API_KEY=your_openrouter_api_key
 VITE_FIREBASE_APIKEY=your_firebase_api_key
 ```
 
-> Note: `client/src/utils/firebase.js` currently loads only the Firebase API key from environment variables. If you add additional Firebase configuration values, also set them in the Vite env file.
+> Note: `client/src/utils/firebase.js` currently hardcodes additional Firebase configuration values such as `authDomain`, `projectId`, and `appId`. Only `VITE_FIREBASE_APIKEY` is loaded from environment variables in the current implementation.
 
 ### 3. Install dependencies
-
-From the project root, install dependencies separately for both client and server.
 
 ```bash
 cd client
@@ -89,9 +126,9 @@ cd ../server
 npm install
 ```
 
-### 4. Run the app locally
+### 4. Run locally
 
-Start the backend server:
+Start the backend:
 
 ```bash
 cd server
@@ -105,67 +142,97 @@ cd ../client
 npm run dev
 ```
 
-Open the client in your browser using the Vite development URL (usually `http://localhost:5173`). The server runs on `http://localhost:8000`.
+Then open the Vite URL in your browser (usually `http://localhost:5173`). The backend server listens on `http://localhost:8000`.
 
-## Client Notes
+## Client Application Overview
 
-- Frontend entry: `client/src/main.jsx`
-- App routes defined in `client/src/App.jsx`
-- Authentication handled in `client/src/pages/Auth.jsx`
-- Resume upload and interview generation are implemented in `client/src/components/Step1SetUp.jsx`
-- Live interview flow and speech support are in `client/src/components/Step2Interview.jsx`
-- Report generation and PDF download are in `client/src/components/Step3Report.jsx`
-- Interview history list is shown in `client/src/pages/InterviewHistory.jsx`
-- Redux state is configured in `client/src/redux/store.js` with `client/src/redux/userSlice.js`
-- Firebase Google sign-in config lives in `client/src/utils/firebase.js`
+- `client/src/main.jsx` — application bootstrap and router/provider setup
+- `client/src/App.jsx` — route definitions and current-user fetch
+- `client/src/pages/Auth.jsx` — Google sign-in page and Firebase login flow
+- `client/src/components/Step1SetUp.jsx` — interview setup, resume upload, and question generation
+- `client/src/components/Step2Interview.jsx` — voice interview experience, speech synthesis, speech recognition, answer submission
+- `client/src/components/Step3Report.jsx` — interview report display and PDF export
+- `client/src/pages/InterviewHistory.jsx` — list of past interviews
+- `client/src/redux/store.js` and `client/src/redux/userSlice.js` — Redux store for user data
+- `client/src/utils/firebase.js` — Firebase config and Google provider setup
 
-## Server Notes
+## Backend Application Overview
 
-- Server entry: `server/index.js`
-- MongoDB connection in `server/config/connectDb.js`
-- JWT token generation in `server/config/token.js`
-- Auth routes in `server/routes/auth.routes.js`
-- User and interview routes in `server/routes/user.route.js` and `server/routes/interview.route.js`
-- Middleware `server/middlewares/isAuth.js` protects authenticated routes using cookie JWT verification
-- Resume parsing and AI interaction are implemented in `server/controllers/interview.controller.js`
-- `server/services/openRouter.service.js` sends prompts to OpenRouter AI
+- `server/index.js` — Express app, middleware, CORS, route registration
+- `server/config/connectDb.js` — MongoDB connection using `process.env.MONGODB_URL`
+- `server/config/token.js` — JWT token generation using `process.env.JWT_SECRET`
+- `server/middlewares/isAuth.js` — JWT cookie authentication middleware
+- `server/middlewares/multer.js` — file upload handling and storage for resume PDFs
+- `server/controllers/auth.controller.js` — Google auth persistence and logout
+- `server/controllers/user.controller.js` — current user retrieval
+- `server/controllers/interview.controller.js` — resume analysis, question generation, answer evaluation, interview finish, history, report
+- `server/services/openRouter.service.js` — AI completion requests to OpenRouter
 
 ## API Endpoints
 
 ### Authentication
 
-- `POST /api/auth/google` — create or authenticate a Google user and set the JWT cookie
-- `GET /api/auth/logout` — clear the JWT cookie and log out
+- `POST /api/auth/google`
+  - Accepts `{ name, email }`
+  - Creates or returns an existing user
+  - Issues a JWT in an HTTP-only cookie
+- `GET /api/auth/logout`
+  - Clears the authentication cookie
 
 ### User
 
-- `GET /api/user/current-user` — return the logged-in user details
+- `GET /api/user/current-user`
+  - Protected by `isAuth`
+  - Returns current user profile data
 
 ### Interview
 
-- `POST /api/interview/resume` — upload a PDF resume and extract structured data
-- `POST /api/interview/generate-questions` — generate AI interview questions and create a new interview session
-- `POST /api/interview/submit-answer` — submit an answer for the current question and receive AI feedback
-- `POST /api/interview/finish` — finish the interview and calculate final scores
-- `GET /api/interview/get-interview` — fetch the current user’s interview history
-- `GET /api/interview/report/:id` — fetch the report for a specific interview
+- `POST /api/interview/resume`
+  - Protected by `isAuth`
+  - Uploads a PDF resume using `multipart/form-data`
+  - Extracts resume text and returns structured fields: role, experience, projects, skills
+- `POST /api/interview/generate-questions`
+  - Protected by `isAuth`
+  - Accepts interview metadata plus resume-derived data
+  - Generates 5 AI interview questions and deducts credits
+- `POST /api/interview/submit-answer`
+  - Protected by `isAuth`
+  - Accepts `{ interviewId, questionIndex, answer, timeTaken }`
+  - Calls AI to score the answer and returns feedback
+- `POST /api/interview/finish`
+  - Protected by `isAuth`
+  - Computes final score averages and marks interview complete
+- `GET /api/interview/get-interview`
+  - Protected by `isAuth`
+  - Returns the current user’s interview history
+- `GET /api/interview/report/:id`
+  - Protected by `isAuth`
+  - Returns detailed report data for a completed interview
 
 ## Important Implementation Details
 
-- The backend uses `openrouter.ai` for AI prompt completion.
-- Resume analysis extracts text from PDF pages via `pdfjs-dist` and sends a structured extraction prompt.
-- Interview questions are generated in a strict 5-question format with progressive difficulty.
-- Answer feedback includes AI scores for confidence, communication, correctness, and a final average score.
-- Interview reports can be downloaded as PDF through the frontend.
+- Resume analysis uses `pdfjs-dist` to parse PDF text and then calls OpenRouter AI to extract role, experience, projects, and skills.
+- Interview questions are generated in a strict format with 5 questions, increasing difficulty from easy to hard.
+- Answer evaluation prompts the AI to return JSON with confidence, communication, correctness, finalScore, and human feedback.
+- Interview report generation on the frontend includes charts and PDF export with `jspdf`
+- The client implements voice-enabled interaction via browser speech synthesis and `webkitSpeechRecognition`.
+- Uploaded resumes are temporarily stored in `server/public` and removed after processing.
+
+## Known Limitations and Notes
+
+- Cookie `secure` is currently set to `false` for local development; enable `true` in production with HTTPS.
+- Speech recognition is implemented only for browsers supporting `webkitSpeechRecognition`.
+- No frontend validation or tests are currently provided beyond the existing UI checks.
+- There is no license configured in this repository.
 
 ## Recommended Improvements
 
-- Enable secure cookies (`secure: true`) and HTTPS in production
-- Add stronger error handling and form validation on the frontend
-- Add `.env.example` files for client and server
-- Add a production deployment guide and build commands
-- Add tests for backend routes and frontend components
+- Add `.env.example` files for both `client` and `server`
+- Improve error handling and user feedback for API failures
+- Add backend and frontend automated tests
+- Use a persistent token blacklist or refresh-token mechanism for logout security
+- Add deployment instructions for production hosting
 
 ## License
 
-This project currently has no license configured. Add a `LICENSE` file if you want to make the project open source.
+This project currently has no license configured. Add a `LICENSE` file to make the project open source.

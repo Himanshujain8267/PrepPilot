@@ -343,11 +343,11 @@ setIsSubmitting(false)
 
 
   return (
-    <div className='min-h-screen bg-linear-to-br from-emerald-50 via-white to-teal-100 flex items-center justify-center p-4 sm:p-6'>
-      <div className='w-full max-w-350 min-h-[80vh] bg-white rounded-3xl shadow-2xl border border-gray-200 flex flex-col lg:flex-row overflow-hidden'>
+    <div className='min-h-screen bg-[radial-gradient(circle_at_top_left,_#f8effa_0%,_#f4ebf7_45%,_#efe6f2_100%)] flex items-center justify-center p-4 sm:p-6'>
+      <div className='w-full max-w-350 min-h-[80vh] bg-white/95 rounded-3xl shadow-[0_20px_60px_rgba(82,14,167,0.12)] border border-[#E7D8EA] flex flex-col lg:flex-row overflow-hidden'>
 
         {/* video section */}
-        <div className='w-full lg:w-[35%] bg-white flex flex-col items-center p-6 space-y-6 border-r border-gray-200'>
+        <div className='w-full lg:w-[35%] bg-[linear-gradient(180deg,_#fcf8fd_0%,_#f6eef9_100%)] flex flex-col items-center p-6 space-y-6 border-r border-[#E7D8EA]'>
           <div className='w-full max-w-md rounded-2xl overflow-hidden shadow-xl'>
             <video
               src={videoSource}
@@ -362,19 +362,19 @@ setIsSubmitting(false)
 
           {/* subtitle */}
           {subtitle && (
-            <div className='w-full max-w-md bg-gray-50 border border-gray-200 rounded-xl p-4 shadow-sm'>
-              <p className='text-gray-700 text-sm sm:text-base font-medium text-center leading-relaxed'>{subtitle}</p>
+            <div className='w-full max-w-md bg-[#F9F2FC] border border-[#E7D8EA] rounded-xl p-4 shadow-sm'>
+              <p className='text-[#522b63] text-sm sm:text-base font-medium text-center leading-relaxed'>{subtitle}</p>
             </div>
           )}
 
 
           {/* timer Area */}
-          <div className='w-full max-w-md bg-white border border-gray-200 rounded-2xl shadow-md p-6 space-y-5'>
+          <div className='w-full max-w-md bg-white/90 border border-[#E7D8EA] rounded-2xl shadow-md p-6 space-y-5'>
             <div className='flex justify-between items-center'>
-              <span className='text-sm text-gray-500'>
+              <span className='text-sm text-[#805093]'>
                 Interview Status
               </span>
-              {isAIPlaying && <span className='text-sm font-semibold text-emerald-600'>
+              {isAIPlaying && <span className='text-sm font-semibold text-[#520EA7]'>
                 {isAIPlaying ? "AI Speaking" : ""}
               </span>}
             </div>
@@ -390,13 +390,13 @@ setIsSubmitting(false)
 
             <div className='grid grid-cols-2 gap-6 text-center'>
               <div>
-                <span className='text-2xl font-bold text-emerald-600'>{currentIndex + 1}</span>
-                <span className='text-xs text-gray-400'>Current Questions</span>
+                <span className='text-2xl font-bold text-[#520EA7]'>{currentIndex + 1}</span>
+                <span className='text-xs text-[#805093]'>Current Questions</span>
               </div>
 
               <div>
-                <span className='text-2xl font-bold text-emerald-600'>{questions.length}</span>
-                <span className='text-xs text-gray-400'>Total Questions</span>
+                <span className='text-2xl font-bold text-[#520EA7]'>{questions.length}</span>
+                <span className='text-xs text-[#805093]'>Total Questions</span>
               </div>
             </div>
 
@@ -407,31 +407,31 @@ setIsSubmitting(false)
         {/* Text section */}
 
         <div className='flex-1 flex flex-col p-4 sm:p-6 md:p-8 relative'>
-          <h2 className='text-xl sm:text-2xl font-bold text-emerald-600 mb-6'>
+          <h2 className='text-xl sm:text-2xl font-bold text-[#520EA7] mb-6'>
             AI Smart Interview
           </h2>
 
 
-          {!isIntroPhase && (<div className='relative mb-6 bg-gray-50 p-4 sm:p-6 rounded-2xl border border-gray-200 shadow-sm'>
-            <p className='text-xs sm:text-sm text-gray-400 mb-2'>
+          {!isIntroPhase && (<div className='relative mb-6 bg-[#F9F2FC] p-4 sm:p-6 rounded-2xl border border-[#E7D8EA] shadow-sm'>
+            <p className='text-xs sm:text-sm text-[#805093] mb-2'>
               Question {currentIndex + 1} of {questions.length}
             </p>
 
-            <div className='text-base sm:text-lg font-semibold text-gray-800 leading-relaxed '>{currentQuestion?.question}</div>
+            <div className='text-base sm:text-lg font-semibold text-[#322B3B] leading-relaxed '>{currentQuestion?.question}</div>
           </div>)
           }
           <textarea
             placeholder="Type your answer here..."
             onChange={(e) => setAnswer(e.target.value)}
             value={answer}
-            className="flex-1 bg-gray-100 p-4 sm:p-6 rounded-2xl resize-none outline-none border border-gray-200 focus:ring-2 focus:ring-emerald-500 transition text-gray-800" />
+            className="flex-1 bg-[#FCF8FD] p-4 sm:p-6 rounded-2xl resize-none outline-none border border-[#D5BED9] focus:ring-2 focus:ring-[#805093] transition text-[#322B3B]" />
 
 
          {!feedback ? ( <div className='flex items-center gap-4 mt-6'>
             <motion.button
               onClick={toggleMic}
               whileTap={{ scale: 0.9 }}
-              className='w-12 h-12 sm:w-14 sm:h-14 flex items-center justify-center rounded-full bg-black text-white shadow-lg'>
+              className='w-12 h-12 sm:w-14 sm:h-14 flex items-center justify-center rounded-full bg-gradient-to-r from-[#805093] to-[#520EA7] text-white shadow-lg'>
               {isMicOn ? <FaMicrophone size={20} /> : <FaMicrophoneSlash size={20}/>}
             </motion.button>
 
@@ -439,7 +439,7 @@ setIsSubmitting(false)
             onClick={submitAnswer}
             disabled={isSubmitting}
               whileTap={{ scale: 0.95 }}
-              className='flex-1 bg-gradient-to-r from-emerald-600 to-teal-500 text-white py-3 sm:py-4 rounded-2xl shadow-lg hover:opacity-90 transition font-semibold disabled:bg-gray-500'>
+              className='flex-1 bg-gradient-to-r from-[#805093] to-[#520EA7] text-white py-3 sm:py-4 rounded-2xl shadow-lg hover:opacity-90 transition font-semibold disabled:bg-[#A174AF]'>
               {isSubmitting?"Submitting...":"Submit Answer"}
 
             </motion.button>
@@ -448,13 +448,13 @@ setIsSubmitting(false)
             <motion.div 
              initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
-            className='mt-6 bg-emerald-50 border border-emerald-200 p-5 rounded-2xl shadow-sm'>
-              <p className='text-emerald-700 font-medium mb-4'>{feedback}</p>
+            className='mt-6 bg-[#F4E8FB] border border-[#D5BED9] p-5 rounded-2xl shadow-sm'>
+              <p className='text-[#520EA7] font-medium mb-4'>{feedback}</p>
 
               <button
               onClick={handleNext}
 
-               className='w-full bg-gradient-to-r from-emerald-600 to-teal-500 text-white py-3 rounded-xl shadow-md hover:opacity-90 transition flex items-center justify-center gap-1'>
+               className='w-full bg-gradient-to-r from-[#805093] to-[#520EA7] text-white py-3 rounded-xl shadow-md hover:opacity-90 transition flex items-center justify-center gap-1'>
                 Next Question <BsArrowRight size={18}/>
               </button>
 

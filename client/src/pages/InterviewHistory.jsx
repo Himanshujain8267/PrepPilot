@@ -26,19 +26,19 @@ function InterviewHistory() {
 
 
     return (
-        <div className='min-h-screen bg-linear-to-br from-gray-50 to-emerald-50 py-10' >
+        <div className='min-h-screen bg-[radial-gradient(circle_at_top_left,_#f8effa_0%,_#f4ebf7_50%,_#efe6f2_100%)] py-10' >
             <div className='w-[90vw] lg:w-[70vw] max-w-[90%] mx-auto'>
 
                 <div className='mb-10 w-full flex items-start gap-4 flex-wrap'>
                     <button
                         onClick={() => navigate("/")}
-                        className='mt-1 p-3 rounded-full bg-white shadow hover:shadow-md transition'><FaArrowLeft className='text-gray-600' /></button>
+                        className='mt-1 p-3 rounded-full bg-white/90 border border-[#E7D8EA] shadow hover:shadow-md transition'><FaArrowLeft className='text-[#520EA7]' /></button>
 
                     <div>
-                        <h1 className='text-3xl font-bold flex-nowrap text-gray-800'>
+                        <h1 className='text-3xl font-bold flex-nowrap text-[#322B3B]'>
                             Interview History
                         </h1>
-                        <p className='text-gray-500 mt-2'>
+                        <p className='text-[#6f567f] mt-2'>
                             Track your past interviews and performance reports
                         </p>
 
@@ -47,8 +47,8 @@ function InterviewHistory() {
 
 
                 {interviews.length === 0 ?
-                    <div className='bg-white p-10 rounded-2xl shadow text-center'>
-                        <p className='text-gray-500'>
+                    <div className='bg-white/90 border border-[#E7D8EA] p-10 rounded-2xl shadow-[0_16px_45px_rgba(82,14,167,0.08)] text-center'>
+                        <p className='text-[#6f567f]'>
                             No interviews found. Start your first interview.
                         </p>
 
@@ -60,18 +60,18 @@ function InterviewHistory() {
                         {interviews.map((item, index) => (
                             <div key={index}
                             onClick={()=>navigate(`/report/${item._id}`)}
-                             className='bg-white p-6 rounded-2xl shadow-md hover:shadow-xl transition-all duration-300 cursor-pointer border border-gray-100'>
+                             className='bg-white/90 p-6 rounded-2xl shadow-[0_16px_45px_rgba(82,14,167,0.08)] hover:shadow-[0_20px_50px_rgba(82,14,167,0.12)] transition-all duration-300 cursor-pointer border border-[#E7D8EA]'>
                                 <div className='flex flex-col md:flex-row md:items-center md:justify-between gap-4'>
                                     <div>
-                                        <h3 className="text-lg font-semibold text-gray-800">
+                                        <h3 className="text-lg font-semibold text-[#322B3B]">
                                             {item.role}
                                         </h3>
 
-                                        <p className="text-gray-500 text-sm mt-1">
+                                        <p className="text-[#6f567f] text-sm mt-1">
                                             {item.experience} • {item.mode}
                                         </p>
 
-                                        <p className="text-xs text-gray-400 mt-2">
+                                        <p className="text-xs text-[#805093] mt-2">
                                             {new Date(item.createdAt).toLocaleDateString()}
                                         </p>
                                     </div>
@@ -80,10 +80,10 @@ function InterviewHistory() {
 
                                         {/* SCORE */}
                                         <div className="text-right">
-                                            <p className="text-xl font-bold text-emerald-600">
+                                            <p className="text-xl font-bold text-[#520EA7]">
                                                 {item.finalScore || 0}/10
                                             </p>
-                                            <p className="text-xs text-gray-400">
+                                            <p className="text-xs text-[#805093]">
                                                 Overall Score
                                             </p>
                                         </div>
@@ -91,8 +91,8 @@ function InterviewHistory() {
                                         {/* STATUS BADGE */}
                                         <span
                                             className={`px-4 py-1 rounded-full text-xs font-medium ${item.status === "completed"
-                                                    ? "bg-emerald-100 text-emerald-700"
-                                                    : "bg-yellow-100 text-yellow-700"
+                                                    ? "bg-[#EAD5F2] text-[#520EA7]"
+                                                    : "bg-[#F4E8FB] text-[#805093]"
                                                 }`}
                                         >
                                             {item.status}

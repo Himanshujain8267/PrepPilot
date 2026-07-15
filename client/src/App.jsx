@@ -9,6 +9,7 @@ import InterviewPage from './pages/InterviewPage'
 import InterviewHistory from './pages/InterviewHistory'
 import Pricing from './pages/Pricing'
 import InterviewReport from './pages/InterviewReport'
+import Profile from './pages/Profile'
 
 
 
@@ -41,6 +42,7 @@ function App() {
 <Route path='/history' element={<InterviewHistory/>} />
 <Route path='/pricing' element={<Pricing/>} />
 <Route path='/report/:id' element={<InterviewReport/>} />
+<Route path='/profile' element={<Profile/>} />
     </Routes>
   )
 }

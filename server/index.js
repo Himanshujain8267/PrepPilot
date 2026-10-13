@@ -11,8 +11,13 @@ import interviewRouter from "./routes/interview.route.js"
 
 const app = express() 
 const PORT = process.env.PORT || 6000 
+const allowedOrigins = (process.env.CLIENT_URL || "http://localhost:5173")
+  .split(",")
+  .map((origin) => origin.trim())
+  .filter(Boolean)
+
 app.use(cors({
-  origin:"http://localhost:5173", // jha seih frontend request kar sakta hai
+  origin: allowedOrigins,
   credentials:true
 }))
 app.use(express.json())
@@ -36,5 +41,4 @@ const startServer = async () => {
 };
 
 startServer();
-
 

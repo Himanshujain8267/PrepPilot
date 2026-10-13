@@ -23,9 +23,18 @@ app.use('/api/auth',authRouter)
 app.use('/api/user',userRouter)
 app.use("/api/interview",interviewRouter)
 
-app.listen(PORT, ()=>{
-    console.log(`server running on port ${PORT}`) ;
-  connectDb()
-})
+const startServer = async () => {
+  try {
+    await connectDb();
+    app.listen(PORT, () => {
+      console.log(`server running on port ${PORT}`);
+    });
+  } catch (error) {
+    console.error("Server startup failed:", error.message);
+    process.exitCode = 1;
+  }
+};
+
+startServer();
 
 

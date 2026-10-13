@@ -2,6 +2,7 @@
 //create user
 //token ko cookie ka andar store karana hai
 
+
 import genToken from "../config/token.js";
 import User from "../models/user.model.js";
 export const googleAuth = async (req,res) => {

@@ -11,7 +11,9 @@ PrepPilot is an AI-powered interview preparation platform built as a full-stack 
 - Runs a timed, voice-enabled interview experience in the browser
 - Evaluates candidate answers with AI scoring and human-like feedback
 - Tracks past interviews and displays history
+- Provides a user profile page accessible from the navbar dropdown
 - Generates downloadable PDF interview reports
+- Applies a consistent PrepPilot branding and purple-themed UI across home, auth, history, profile, and interview screens
 
 ## Key Features
 
@@ -23,6 +25,7 @@ PrepPilot is an AI-powered interview preparation platform built as a full-stack 
 - Voice support via browser speech synthesis and WebKit speech recognition
 - Answer submission with AI evaluation of confidence, communication, and correctness
 - Interview history and report retrieval
+- Profile page accessible from the navbar user menu
 - PDF report download using `jspdf` and `jspdf-autotable`
 
 ## Tech Stack
@@ -51,6 +54,7 @@ client/
       InterviewPage.jsx
       InterviewReport.jsx
       Pricing.jsx
+      Profile.jsx
     components/
       AuthModel.jsx
       Footer.jsx
@@ -147,8 +151,9 @@ Then open the Vite URL in your browser (usually `http://localhost:5173`). The ba
 ## Client Application Overview
 
 - `client/src/main.jsx` — application bootstrap and router/provider setup
-- `client/src/App.jsx` — route definitions and current-user fetch
+- `client/src/App.jsx` — route definitions and current-user fetch, including the new `/profile` route
 - `client/src/pages/Auth.jsx` — Google sign-in page and Firebase login flow
+- `client/src/pages/Profile.jsx` — profile page for viewing user details and quick access to history
 - `client/src/components/Step1SetUp.jsx` — interview setup, resume upload, and question generation
 - `client/src/components/Step2Interview.jsx` — voice interview experience, speech synthesis, speech recognition, answer submission
 - `client/src/components/Step3Report.jsx` — interview report display and PDF export

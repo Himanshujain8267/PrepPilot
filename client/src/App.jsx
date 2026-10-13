@@ -10,11 +10,7 @@ import InterviewHistory from './pages/InterviewHistory'
 import Pricing from './pages/Pricing'
 import InterviewReport from './pages/InterviewReport'
 import Profile from './pages/Profile'
-
-
-
-
-export const ServerUrl = "https://preppilot-lx58.onrender.com"
+import { ServerUrl } from './config'
 
 
 function App() {

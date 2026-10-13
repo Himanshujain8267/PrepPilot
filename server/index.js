@@ -11,7 +11,7 @@ import interviewRouter from "./routes/interview.route.js"
 
 const app = express() 
 const PORT = process.env.PORT || 6000 
-const allowedOrigins = (process.env.CLIENT_URL || "http://localhost:5173")
+const allowedOrigins = (process.env.CLIENT_URL || "https://preppilot-1client.onrender.com")
   .split(",")
   .map((origin) => origin.trim())
   .filter(Boolean)

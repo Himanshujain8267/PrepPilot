@@ -18,8 +18,8 @@ export const googleAuth = async (req,res) => {
         let token = await genToken(user._id)
         res.cookie("token" , token , {
             httpOnly:true, // Prevents XSS attacks by blocking JavaScript access
-            secure:false, // why false : due to work on localhost , bcz only work on http not on https
-            sameSite:"strict", // Prevents CSRF attacks
+            secure:true, // why false : due to work on localhost , bcz only work on http not on https
+            sameSite:"none", // Prevents CSRF attacks
             maxAge:7 * 24 * 60 * 60 * 1000
         })
 

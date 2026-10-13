@@ -14,7 +14,7 @@ import Profile from './pages/Profile'
 
 
 
-export const ServerUrl = "http://localhost:8000"
+export const ServerUrl = "https://preppilot-lx58.onrender.com"
 
 
 function App() {
